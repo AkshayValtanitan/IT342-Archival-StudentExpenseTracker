@@ -1,13 +1,13 @@
-package com.example.project;
+package edu.cit.archival.archival.studentexpensetracker;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class It342G5ArchivalLab1Application {
+public class StudentExpenseTrackerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(It342G5ArchivalLab1Application.class, args);
+		SpringApplication.run(StudentExpenseTrackerApplication.class, args);
 	}
 
 }

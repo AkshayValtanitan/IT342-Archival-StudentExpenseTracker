@@ -1,4 +1,4 @@
-package com.example.project.dto;
+package edu.cit.archival.archival.studentexpensetracker.dto;
 
 public class AuthRequest {
     private String name;

@@ -1,4 +1,4 @@
-package com.example.project.entity;
+package edu.cit.archival.archival.studentexpensetracker.entity;
 
 import jakarta.persistence.*;
 

@@ -1,9 +1,9 @@
-package com.example.project.controller;
+package edu.cit.archival.archival.studentexpensetracker.controller;
 
-import com.example.project.dto.ApiResponse;
-import com.example.project.dto.AuthRequest;
-import com.example.project.entity.User;
-import com.example.project.repository.UserRepository;
+import edu.cit.archival.archival.studentexpensetracker.dto.ApiResponse;
+import edu.cit.archival.archival.studentexpensetracker.dto.AuthRequest;
+import edu.cit.archival.archival.studentexpensetracker.entity.User;
+import edu.cit.archival.archival.studentexpensetracker.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;

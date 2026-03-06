@@ -1,7 +1,7 @@
-package com.example.project.service;
+package edu.cit.archival.archival.studentexpensetracker.service;
 
-import com.example.project.entity.User;
-import com.example.project.repository.UserRepository;
+import edu.cit.archival.archival.studentexpensetracker.entity.User;
+import edu.cit.archival.archival.studentexpensetracker.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
