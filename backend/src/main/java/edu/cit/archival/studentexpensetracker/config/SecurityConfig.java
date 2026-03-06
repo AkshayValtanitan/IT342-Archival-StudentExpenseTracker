@@ -1,4 +1,4 @@
-package edu.cit.archival.archival.studentexpensetracker.config;
+package edu.cit.archival.studentexpensetracker.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
