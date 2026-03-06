@@ -25,24 +25,30 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<ApiResponse> register(@RequestBody AuthRequest request) {
-        String username = request.getUsername();
+        String name = request.getName();
+        String email = request.getEmail();
         String password = request.getPassword();
 
-        if (username == null || username.trim().isEmpty()) {
+        if (name == null || name.trim().isEmpty()) {
             return ResponseEntity.badRequest()
-                    .body(new ApiResponse(false, "Username is required"));
+                    .body(new ApiResponse(false, "Name is required"));
+        }
+        if (email == null || !email.contains("@")) {
+            return ResponseEntity.badRequest()
+                    .body(new ApiResponse(false, "A valid email is required"));
         }
         if (password == null || password.length() < 6) {
             return ResponseEntity.badRequest()
                     .body(new ApiResponse(false, "Password must be at least 6 characters"));
         }
-        if (userRepository.findByUsername(username).isPresent()) {
+        if (userRepository.findByEmail(email).isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(new ApiResponse(false, "Username already exists"));
+                    .body(new ApiResponse(false, "Email already registered"));
         }
 
         User user = new User();
-        user.setUsername(username.trim());
+        user.setName(name.trim());
+        user.setEmail(email.trim().toLowerCase());
         user.setPassword(passwordEncoder.encode(password));
         userRepository.save(user);
 
@@ -53,21 +59,21 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<ApiResponse> login(@RequestBody AuthRequest request,
                                              HttpSession session) {
-        String username = request.getUsername();
+        String email = request.getEmail();
         String password = request.getPassword();
 
-        if (username == null || password == null) {
+        if (email == null || password == null) {
             return ResponseEntity.badRequest()
-                    .body(new ApiResponse(false, "Username and password are required"));
+                    .body(new ApiResponse(false, "Email and password are required"));
         }
 
-        User user = userRepository.findByUsername(username).orElse(null);
+        User user = userRepository.findByEmail(email.trim().toLowerCase()).orElse(null);
         if (user == null || !passwordEncoder.matches(password, user.getPassword())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(new ApiResponse(false, "Invalid username or password"));
+                    .body(new ApiResponse(false, "Invalid email or password"));
         }
 
-        session.setAttribute("username", username);
+        session.setAttribute("email", email.trim().toLowerCase());
         return ResponseEntity.ok(new ApiResponse(true, "Login successful"));
     }
 

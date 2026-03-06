@@ -16,27 +16,23 @@ public class AuthService {
         this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
-    // Register ---------------------------------------------------------------------
-
-    public String register(String username, String password) {
-        // if (userRepository.existsByUsername(username)) {
-        //     return "Username already taken";
-        // }
-        if (userRepository.findByUsername(username).isPresent()) {
-            throw new RuntimeException("Username already exists");
+    // Register
+    public String register(String name, String email, String password) {
+        if (userRepository.findByEmail(email).isPresent()) {
+            throw new RuntimeException("Email already registered");
         }
 
         User user = new User();
-        user.setUsername(username);
+        user.setName(name.trim());
+        user.setEmail(email.trim().toLowerCase());
         user.setPassword(passwordEncoder.encode(password));
         userRepository.save(user);
         return "User registered successfully";
     }
 
-    // Login ----------------------------------------------------------------------
-
-    public String login(String username, String password) {
-        return userRepository.findByUsername(username)
+    // Login
+    public String login(String email, String password) {
+        return userRepository.findByEmail(email.trim().toLowerCase())
                 .map(user -> passwordEncoder.matches(password, user.getPassword()) ?
                         "Login successful" :
                         "Incorrect password")

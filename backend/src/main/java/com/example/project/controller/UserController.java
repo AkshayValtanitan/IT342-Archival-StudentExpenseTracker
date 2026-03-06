@@ -22,22 +22,22 @@ public class UserController {
 
     @GetMapping("/me")
     public ResponseEntity<ApiResponse> me(HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username == null) {
+        String email = (String) session.getAttribute("email");
+        if (email == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(new ApiResponse(false, "Not logged in"));
         }
 
-        User user = userRepository.findByUsername(username).orElse(null);
+        User user = userRepository.findByEmail(email).orElse(null);
         if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new ApiResponse(false, "User not found"));
         }
 
-        // Return only safe fields, never return password
         Map<String, Object> userData = Map.of(
                 "id", user.getId(),
-                "username", user.getUsername()
+                "name", user.getName(),
+                "email", user.getEmail()
         );
         return ResponseEntity.ok(new ApiResponse(true, "Success", userData));
     }
