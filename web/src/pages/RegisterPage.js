@@ -6,18 +6,21 @@ const RegisterPage = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
+    const [isError, setIsError] = useState(false);
 
     const handleRegister = async (e) => {
         e.preventDefault();
         try {
             const res = await axios.post(
                 "http://localhost:8080/api/auth/register",
-                null,
-                { params: { username, password }, withCredentials: true }
+                { username, password },
+                { withCredentials: true }
             );
-            setMessage(res.data);
+            setIsError(false);
+            setMessage(res.data.message);
         } catch (err) {
-            setMessage(err.response?.data || "Server error");
+            setIsError(true);
+            setMessage(err.response?.data?.message || "Server error");
         }
     };
 
@@ -41,11 +44,13 @@ const RegisterPage = () => {
                     required
                     className="register-input"
                 />
-                <button type="submit" className="register-button">
-                    Register
-                </button>
+                <button type="submit" className="register-button">Register</button>
             </form>
-            {message && <p className="register-message">{message}</p>}
+            {message && (
+                <p className="register-message" style={{ color: isError ? "red" : "green" }}>
+                    {message}
+                </p>
+            )}
         </div>
     );
 };

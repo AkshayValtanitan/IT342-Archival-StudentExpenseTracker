@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./DashboardPage.css";
 
-
 const DashboardPage = ({ username }) => {
     const [user, setUser] = useState(null);
     const [message, setMessage] = useState("");
@@ -15,14 +14,16 @@ const DashboardPage = ({ username }) => {
 
         const fetchUser = async () => {
             try {
-                const res = await axios.get("http://localhost:8080/api/user/me", { withCredentials: true });
-                setUser(res.data);
-            } catch (err) {
-                if (err.response && typeof err.response.data === "object") {
-                    setMessage(JSON.stringify(err.response.data));
+                const res = await axios.get("http://localhost:8080/api/user/me", {
+                    withCredentials: true
+                });
+                if (res.data.success) {
+                    setUser(res.data.data); // ← extract the nested data object
                 } else {
-                    setMessage(err.response?.data || "Server error");
+                    setMessage(res.data.message);
                 }
+            } catch (err) {
+                setMessage(err.response?.data?.message || "Server error");
             }
         };
 
@@ -37,7 +38,7 @@ const DashboardPage = ({ username }) => {
             {user ? (
                 <div>
                     <div className="dashboard-page-user-info">
-                        <p>Welcome, {user.dashboardusername}!</p>
+                        <p>Welcome, {user.username}!</p>
                         <p>This is your sample dashboard.</p>
                     </div>
                     <ul className="dashboard-page-list">

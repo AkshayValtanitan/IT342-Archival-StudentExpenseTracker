@@ -12,18 +12,19 @@ const LoginPage = ({ onLogin }) => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post("http://localhost:8080/api/auth/login", null, {
-                params: { username, password },
-                withCredentials: true
-            });
-            if (res.data === "Login successful") {
+            const res = await axios.post(
+                "http://localhost:8080/api/auth/login",
+                { username, password },
+                { withCredentials: true }
+            );
+            if (res.data.success) {
                 onLogin(username);
                 navigate("/dashboard");
             } else {
-                setMessage(res.data);
+                setMessage(res.data.message);
             }
         } catch (err) {
-            setMessage(err.response?.data || "Server error");
+            setMessage(err.response?.data?.message || "Server error");
         }
     };
 
@@ -49,7 +50,7 @@ const LoginPage = ({ onLogin }) => {
                 />
                 <button type="submit" className="login-page-button">Login</button>
             </form>
-            {message && <div className="login-page-message">{message}</div>}
+            {message && <div className="login-page-message" style={{ color: "red" }}>{message}</div>}
         </div>
     );
 };
