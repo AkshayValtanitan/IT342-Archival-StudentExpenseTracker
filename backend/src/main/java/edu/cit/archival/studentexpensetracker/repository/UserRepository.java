@@ -1,6 +1,6 @@
-package edu.cit.archival.archival.studentexpensetracker.repository;
+package edu.cit.archival.studentexpensetracker.repository;
 
-import edu.cit.archival.archival.studentexpensetracker.entity.User;
+import edu.cit.archival.studentexpensetracker.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 

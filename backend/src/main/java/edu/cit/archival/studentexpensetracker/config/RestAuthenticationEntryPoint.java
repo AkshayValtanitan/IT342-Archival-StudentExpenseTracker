@@ -1,4 +1,4 @@
-package edu.cit.archival.archival.studentexpensetracker.config;
+package edu.cit.archival.studentexpensetracker.config;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
