@@ -8,7 +8,7 @@ const DashboardPage = ({ username }) => {
 
     useEffect(() => {
         if (!username) {
-            setMessage("You must login first");
+            setMessage("You must be logged in to view this page.");
             return;
         }
 
@@ -18,7 +18,7 @@ const DashboardPage = ({ username }) => {
                     withCredentials: true
                 });
                 if (res.data.success) {
-                    setUser(res.data.data); // ← extract the nested data object
+                    setUser(res.data.data);
                 } else {
                     setMessage(res.data.message);
                 }
@@ -30,25 +30,53 @@ const DashboardPage = ({ username }) => {
         fetchUser();
     }, [username]);
 
-    if (!username) return <p>{message}</p>;
+    if (!username) {
+        return (
+            <div className="dashboard-page-container">
+                <p className="dashboard-page-message">{message}</p>
+            </div>
+        );
+    }
 
     return (
         <div className="dashboard-page-container">
-            <h2 className="dashboard-page-title">Dashboard</h2>
-            {user ? (
-                <div>
-                    <div className="dashboard-page-user-info">
-                        <p>Welcome, {user.username}!</p>
-                        <p>This is your sample dashboard.</p>
+
+            {/* Profile card */}
+            <div className="dashboard-page-card">
+                <div className="dashboard-page-user-info">
+                    <div className="dashboard-page-avatar">
+                        {user?.name?.charAt(0).toUpperCase() ?? "?"}
                     </div>
-                    <ul className="dashboard-page-list">
-                        <li>Profile Info</li>
-                        <li>Recent Activity</li>
-                        <li>Settings</li>
-                    </ul>
+                    <div>
+                        <h3>Welcome back, {user?.name}!</h3>
+                        <p>You're successfully logged in</p>
+                    </div>
+                    <span className="dashboard-page-badge">● Active Session</span>
                 </div>
+                <div className="dashboard-page-section-title">Quick Links</div>
+                        <ul className="dashboard-page-list">
+                            <li>Profile Info</li>
+                            <li>Recent Activity</li>
+                            <li>Settings</li>
+                        </ul>
+            </div>
+
+            <div className="dashboard-page-header">
+                <h2 className="dashboard-page-title">
+                    Dash<span>board</span>
+                </h2>
+            </div>
+
+            {user ? (
+                <>
+
+                    {/* Quick links card */}
+                    <div className="dashboard-page-tabs">
+                        
+                    </div>
+                </>
             ) : (
-                <p className="dashboard-page-message">{message || "Loading..."}</p>
+                <p className="dashboard-page-message">{message || "Loading your dashboard..."}</p>
             )}
         </div>
     );

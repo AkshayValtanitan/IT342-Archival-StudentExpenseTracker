@@ -8,11 +8,11 @@
 		<version>4.0.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
-	<artifactId>project</artifactId>
+	<groupId>edu.cit.archival</groupId>
+	<artifactId>studentexpensetracker</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>IT342_G5_Archival_Lab1</name>
-	<description>Start of project</description>
+	<name>StudentExpenseTrackerApplication</name>
+	<description>Start of studentexpensetracker</description>
 	<url/>
 	<licenses>
 		<license/>
